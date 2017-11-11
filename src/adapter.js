@@ -1,19 +1,28 @@
 class Adapter {
   constructor() {
     this.baseUrl = "http://localhost:3000";
+    this.headers = {
+      "Content-Type": "application/json",
+      Accept: "application/json"
+    };
   }
+
   fetchNotes() {
-    return fetch(`${this.baseUrl}/api/v1/notes`).then(res => res.json());
-    // this is a promise object
+    return this.get(`${this.baseUrl}/api/v1/notes`);
   }
 
   updateNote(id, body) {
-    return fetch(`${this.baseUrl}/notes/${id}`, {
+    return this.patch(`${this.baseUrl}/api/v1/notes/${id}`, body);
+  }
+
+  get(url) {
+    return fetch(url).then(res => res.json());
+  }
+
+  patch(url, body) {
+    return fetch(url, {
       method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json"
-      },
+      headers: this.headers,
       body: JSON.stringify(body)
     }).then(res => res.json());
   }
