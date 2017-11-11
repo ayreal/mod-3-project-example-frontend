@@ -6,6 +6,11 @@ class Note {
     Note.all.push(this);
   }
 
+  update({ title, content }) {
+    this.title = title;
+    this.content = content;
+  }
+
   renderListItem() {
     return `
     <li>
@@ -13,10 +18,6 @@ class Note {
         <button data-id=${this.id}>edit</button>
       </h3>
     </li>`;
-  }
-
-  static findById(id) {
-    return this.all.find(note => note.id === id);
   }
 
   renderUpdateForm() {
@@ -33,6 +34,10 @@ class Note {
        <button type='submit'>Save Note</button>
      </form>
    `;
+  }
+
+  static findById(id) {
+    return this.all.find(note => note.id === id);
   }
 }
 

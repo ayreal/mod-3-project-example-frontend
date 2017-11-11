@@ -23,6 +23,7 @@ class App {
   }
 
   addNotes() {
+    $("#notes-list").empty(); /* clear out whatever is there */
     Note.all.forEach(note => $("#notes-list").append(note.renderListItem()));
   }
 
@@ -38,9 +39,11 @@ class App {
       .val();
 
     const bodyJSON = { title, content };
-    this.adapter
-      .updateNote(note.id, bodyJSON)
-      .then(updatedNote => console.log(updatedNote));
+    this.adapter.updateNote(note.id, bodyJSON).then(updatedNote => {
+      const note = Note.findById(updatedNote.id);
+      note.update(updatedNote);
+      this.addNotes();
+    });
   }
 
   handleEditClick(e) {
