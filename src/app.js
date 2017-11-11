@@ -1,4 +1,7 @@
 class App {
+  constructor() {
+    this.adapter = new Adapter();
+  }
   attachEventListeners() {
     $("#notes-list").on("click", "button", e => {
       const id = parseInt(e.target.dataset.id);
@@ -15,7 +18,12 @@ class App {
         const content = $(e.target)
           .find("textarea")
           .val();
-        // debugger;
+
+        $("#update").on("submit", "form", e => {
+          this.adapter
+            .updateNote(note.id, bodyJSON)
+            .then(updatedNote => console.log(updatedNote));
+        });
 
         const bodyJSON = { title, content };
         fetch(`http://localhost:3000/api/v1/notes/${note.id}`, {
