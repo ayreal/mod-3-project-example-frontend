@@ -1,6 +1,6 @@
 /* src/index.js */
 $(document).ready(() => {
-  fetch("http://localhost:3000/notes")
+  fetch("http://localhost:3000/api/v1/notes")
     .then(res => res.json())
     .then(json => {
       json.forEach(note => {
